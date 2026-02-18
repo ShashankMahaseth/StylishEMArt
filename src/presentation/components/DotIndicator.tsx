@@ -10,13 +10,16 @@ interface DotIndicatorProps {
 const DotIndicator: React.FC<DotIndicatorProps> = ({ currentIndex }) => {
   return (
     <View style={styles.container}>
-      {onBoardingData.map((_, index) => (
+      {onBoardingData.map(( _ , index) => (
         <View
           key={index}
-          style={[
+          style={
+            [
+
             styles.dot,
             index === currentIndex && styles.activeDot,
-          ]}
+]
+        }
         />
       ))}
     </View>

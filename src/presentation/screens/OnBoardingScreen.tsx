@@ -1,21 +1,44 @@
 import React from 'react';
 import { moderateScale } from 'react-native-size-matters';
-import { Dimensions, FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 import { OnBoardingScreenProps } from '../types/fontColor';
 import { onBoardingData } from '../constants/onboardingData';
 import DotIndicator from '../components/DotIndicator';
+import { RootStackParamList } from '../navigation/types';
+import { useTheme } from '../../res/themes/hook/useTheme';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 
 
-const OnBoardingScreen = ({ fontColor = '#111111' }: OnBoardingScreenProps) => {
+type OnboardingNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Onboarding'
+>;
+
+const OnBoardingScreen = ({ fontColor }: OnBoardingScreenProps) => {
+  const navigation = useNavigation<OnboardingNavigationProp>();
+  const theme = useTheme();
+  const textColor = fontColor ?? theme.text;
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const flatListRef = React.useRef<FlatList>(null);
 
   const handleScroll = (event: any) => {
     const index = Math.round(
+
       event.nativeEvent.contentOffset.x / event.nativeEvent.layoutMeasurement.width,
+      
     );
     setCurrentIndex(index);
   };
@@ -34,23 +57,29 @@ const OnBoardingScreen = ({ fontColor = '#111111' }: OnBoardingScreenProps) => {
     const lastIndex = onBoardingData.length - 1;
     if (currentIndex < lastIndex) {
       goToIndex(currentIndex + 1);
+      return;
     }
+
+    navigation.navigate('Auth');
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+
 {/***************************************************************************************************/}
       <View style={styles.topTextContainer}>
         <Text style={styles.title1}>
-          <Text style={{ color: fontColor }}>{currentIndex + 1}</Text>
+          <Text style={{ color: textColor }}>{currentIndex + 1}</Text>
           <Text style={{ color: 'gray' }}>/{onBoardingData.length}</Text>
         </Text>
 
-        <Text style={[styles.title1, { color: fontColor }]}>Skip</Text>
+        <Pressable onPress={() => navigation.replace('Auth')} hitSlop={8}>
+          <Text style={[styles.title1, { color: textColor }]}>Skip</Text>
+        </Pressable>
       </View>
 {/***************************************************************************************************/}
 
-      <FlatList
+       <FlatList
         ref={flatListRef}
         data={onBoardingData}
         keyExtractor={(item) => item.id}
@@ -63,16 +92,18 @@ const OnBoardingScreen = ({ fontColor = '#111111' }: OnBoardingScreenProps) => {
         renderItem={({ item }) => (
           <View style={styles.slide}>
             <Image source={item.image} style={styles.image} />
-            <Text style={[styles.title2, { color: fontColor }]}>{item.title}</Text>
+            <Text style={[styles.title2, { color: textColor }]}>{item.title}</Text>
             <Text style={[styles.description, { color: '#A8A8A9' }]}>{item.description}</Text>
           </View>
-        )}
+        )
+      }
       />
+
 {/***************************************************************************************************/}
       <View style={styles.bottomItem}>
         {currentIndex > 0 ? (
           <Pressable onPress={handlePrev} hitSlop={8} style={styles.bottomButton}>
-            <Text style={[styles.title1, { color: fontColor }]}>Prev</Text>
+            <Text style={[styles.title1, { color: textColor }]}>Prev</Text>
           </Pressable>
         ) : (
           <View style={styles.bottomButton} />
@@ -82,7 +113,7 @@ const OnBoardingScreen = ({ fontColor = '#111111' }: OnBoardingScreenProps) => {
 
         <Pressable onPress={handleNext} hitSlop={8} style={styles.bottomButton}>
           <Text style={[styles.title1, { color: '#F83758' }]}>
-            {currentIndex + 1 === 3 ? 'GetStarted' : 'Next'}
+            {currentIndex === onBoardingData.length - 1 ? 'GetStarted' : 'Next'}
           </Text>
         </Pressable>
       </View>

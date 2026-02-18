@@ -3,6 +3,8 @@ export interface ThemeColors {
   text: string;
   primary: string;
   card: string;
+  borderColor: string;
+  placeholder: string;
 }
 
 export const lightTheme: ThemeColors = {
@@ -10,6 +12,8 @@ export const lightTheme: ThemeColors = {
   text: "#111111",
   primary: "#4F46E5",
   card: "#F3F4F6",
+  borderColor: "#A8A8A9",
+  placeholder: "#6B7280",
 };
 
 export const darkTheme: ThemeColors = {
@@ -17,4 +21,6 @@ export const darkTheme: ThemeColors = {
   text: "#FFFFFF",
   primary: "#6366F1",
   card: "#1F2933",
+  borderColor: "#374151",
+  placeholder: "#9CA3AF",
 };

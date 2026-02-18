@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "627183598108",
+    "project_id": "stylish-react-native",
+    "storage_bucket": "stylish-react-native.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627183598108:android:b12eaccc381512fc1bbdd9",
+        "android_client_info": {
+          "package_name": "com.stylishemart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627183598108-a4106pqpfi9ivj2l5iqko2bke1839klc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_W7slPV0PonG5WLeo8ewOmKFMNbcCyH0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627183598108-a4106pqpfi9ivj2l5iqko2bke1839klc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
